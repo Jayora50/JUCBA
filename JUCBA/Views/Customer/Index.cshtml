@@ -1,0 +1,98 @@
+﻿@model IEnumerable<JUCBA.Core.Models.Customer>
+    <head>
+        <script type="text/javascript">
+            function goToNewPage(count) {
+                var id = $("#customerId" + count).val();
+                var url = document.getElementById('list' + count).value;
+                if (url != 'none') {
+                    window.location = url + id;
+                }
+            }
+        </script>
+    </head>
+@{
+    ViewBag.Title = "Index";
+    var count = 0;
+}
+
+<h2>All Customers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new {}, new {@class="btn btn-primary"})
+</p>
+<table class="table table-striped table-bordered" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <form>
+                    <input id="customerId@(count)" type="hidden" value="@item.ID" />
+                    <select name="list" id="list@(count)" accesskey="target" onclick="goToNewPage(@count)">
+                        <option value='none' selected>Select</option>
+                        <option value="Customer/Edit/">Edit</option>
+                        <option value="Customer/Details/">Details</option>
+                        <option value="Customer/Delete/">Delete</option>
+                    </select>
+                    @*<input type=button value="Go" onclick="goToNewPage(@item.Id)" />*@
+                    @*<input type=button value="Go" onclick="goToNewPage(@count)" />*@
+
+                </form>
+                @*<button class="col-md-offset-2 col-md-6">@Html.ActionLink("Edit", "Edit", new {id = item.ID})</button>
+        <button class="col-md-offset-2 col-md-6"> @Html.ActionLink("Details", "Details", new {id = item.ID})</button>
+        <button class="col-md-offset-2 col-md-6">@Html.ActionLink("Delete", "Delete", new {id = item.ID})</button>*@
+            </td>
+        </tr>
+    }
+</tbody>
+
+</table>

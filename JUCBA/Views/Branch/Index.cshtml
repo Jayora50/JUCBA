@@ -1,0 +1,69 @@
+﻿@using JUCBA.Core.Models
+@model IEnumerable<JUCBA.Core.Models.Branch>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All Branches</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered table-striped" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SortCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SortCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @if (ViewBag.BusinessIsOpen)
+                {
+                     if (item.Status == BranchStatus.Closed)
+                     {
+                         @Html.ActionLink("Open", "OpenOrCloseBranch", new {id = item.ID}, new {@class="btn btn-success "})
+                     }
+                     else
+                     {
+                          @Html.ActionLink("Close", "OpenOrCloseBranch", new {id = item.ID}, new {@class="btn btn-success "})
+                     }
+                     
+                }
+                
+            @Html.ActionLink(" Edit", "Edit", new { id = item.ID }, new {@class="btn btn-success "})  
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new {@class="btn btn-success"})
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new {@class="btn btn-success"}) 
+        </tr>
+    }
+</tbody>
+
+</table>

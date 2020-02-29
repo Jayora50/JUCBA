@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Index";
+}
+    <center>
+        <div style="background-image: url('/vendor/white.jfif');padding:200px;width:1000px;height:600px;border-radius: 450px">
+            <h2>Welcome @User.Identity.GetUserName()</h2>
+
+            <div id="page-wrapper">
+                @using (Html.BeginForm())
+                {
+                    if (ViewBag.Msg != null)
+                    {
+                        <div class="alert alert-primary" role="alert">
+                            @ViewBag.Msg
+                            @if (ViewBag.Msg == "Please ensure all branches are closed before running EOD")
+                            {
+                                <button>@Html.ActionLink("Close All Branches", "CloseAllBranches")</button>
+                            }
+                        </div>
+                    }
+                    <p id="toastAlert" hidden="hidden">@ViewBag.Msg</p>
+
+                    JUCBA.Logic.EodLogic logic = new JUCBA.Logic.EodLogic();
+                    var config = new JUCBA.Data.Repositories.ConfigurationRepository().GetFirst();
+                    <p class="text-primary">Financial Date: @config.FinancialDate.ToString("D")</p>
+                    if (logic.isBusinessClosed())
+                    {
+                        <h3 class="text-success">Yet to run EOD</h3>
+                    }
+                    else
+                    {
+                        <h3 class="text-danger">Business Opened, Close First!</h3>
+                    }
+
+                    @Html.ActionLink(" EOD", "RunEOD", new { }, new { @class = "btn btn-success fas fa-power-off" })
+                }
+            </div>
+        </div>
+    </center>

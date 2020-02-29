@@ -1,0 +1,119 @@
+﻿@model IEnumerable<JUCBA.Core.Models.ApplicationUser>
+<head>
+    <script type="text/javascript">
+        function goToNewPage(count) {
+            var id = $("#userId" + count).val();
+            var url = document.getElementById('list'+count).value;
+            if (url != 'none') {
+                window.location = url + id;
+            }
+        }
+    </script>
+</head>
+@{
+    ViewBag.Title = "Index";
+    var count = 0;
+}
+
+
+<h2>All Users</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new {}, new { @class = "btn btn-success" })
+</p>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped" id="dataTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayName("Role")
+                </th>
+                <th>
+                    @Html.DisplayName("Branch")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var item in Model)
+        {
+            count++;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PasswordHash)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecurityStamp)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessFailedCount)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Branch.Name)
+                </td>
+                <td>
+                    <form>
+                        <input id="userId@(count)" type="hidden" value="@item.Id" />
+                        <select name="list" id="list@(count)" accesskey="target" onclick="goToNewPage(@count)">
+                            <option value='none' selected>Select</option>
+                            <option value="User/Edit/">Edit</option>
+                            <option value="User/Details/">Details</option>
+                            <option value="User/Delete/">Delete</option>
+                        </select>
+                        @*<input type=button value="Go" onclick="goToNewPage(@item.Id)" />*@
+                        @*<input type=button value="Go" onclick="goToNewPage(@count)" />*@
+
+                    </form>
+                    @*<button class="col-md-offset-2 col-md-6" > @Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button> 
+                    <button class="col-md-offset-2 col-md-6">  @Html.ActionLink("Details", "Details", new { id = item.Id }) </button>
+                    <button class="col-md-offset-2 col-md-6"> @Html.ActionLink("Delete", "Delete", new { id = item.Id })</button>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+
+    </table>
+</div>
